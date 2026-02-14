@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gael Premium Task System</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    color:white;
+}
+
+.card{
+    background:rgba(255,255,255,0.05);
+    backdrop-filter:blur(15px);
+    padding:30px;
+    border-radius:20px;
+    width:350px;
+    box-shadow:0 0 40px rgba(0,255,255,0.4);
+    text-align:center;
+    animation:glow 3s infinite alternate;
+}
+
+@keyframes glow{
+    from{box-shadow:0 0 20px rgba(0,255,255,0.3);}
+    to{box-shadow:0 0 60px rgba(0,255,255,0.8);}
+}
+
+input{
+    padding:10px;
+    border-radius:10px;
+    border:none;
+    width:80%;
+    margin-bottom:10px;
+    text-align:center;
+}
+
+button{
+    padding:10px 15px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:bold;
+    background:linear-gradient(90deg,#00f2fe,#4facfe);
+    color:white;
+    transition:0.3s;
+    margin:5px;
+}
+
+button:hover{
+    transform:scale(1.05);
+}
+
+.hidden{
+    display:none;
+}
+
+.timer{
+    margin-top:15px;
+    color:cyan;
+    font-size:18px;
+}
+
+.success{
+    margin-top:15px;
+    color:lime;
+    font-weight:bold;
+    font-size:18px;
+}
+
+.finalScreen{
+    animation:fadeIn 1.5s forwards;
+}
+
+@keyframes fadeIn{
+    from{opacity:0; transform:scale(0.9);}
+    to{opacity:1; transform:scale(1);}
+}
+</style>
+</head>
+<body>
+
+<!-- KEY SYSTEM -->
+<div class="card" id="keyScreen">
+    <h2>🔐 PREMIUM ACCESS</h2>
+    <p>Introduce tu Key</p>
+    <input type="text" id="keyInput" placeholder="Enter Key">
+    <br>
+    <button onclick="checkKey()">Unlock</button>
+    <div class="error" id="errorMsg"></div>
+</div>
+
+<!-- TASK SYSTEM -->
+<div class="card hidden" id="taskScreen">
+    <h2>GAEL TASK SYSTEM</h2>
+
+    <p><b>Tarea 1:</b> Suscribirse al canal</p>
+    <button onclick="openChannel()">Ir al Canal</button>
+
+    <p><b>Tarea 2:</b> Like + Compartir</p>
+    <button onclick="startTask()">Ir al Video</button>
+
+    <div class="timer" id="timer"></div>
+    <div class="success" id="success"></div>
+</div>
+
+<!-- FINAL SCREEN -->
+<div class="card hidden" id="finalScreen">
+    <h2>🎉 ¡Tareas Completadas!</h2>
+    <p>Gracias por completar las tareas.</p>
+    <button onclick="restart()">🔄 Hacer de nuevo</button>
+    <button onclick="download()">💾 Descargar información</button>
+</div>
+
+<script>
+const VALID_KEY = "gaeltr9";
+
+// Key system
+function checkKey(){
+    const input = document.getElementById("keyInput").value;
+    if(input === VALID_KEY){
+        document.getElementById("keyScreen").classList.add("hidden");
+        document.getElementById("taskScreen").classList.remove("hidden");
+    } else {
+        document.getElementById("errorMsg").innerText="❌ Key Incorrecta";
+    }
+}
+
+// Abrir canal
+function openChannel(){
+    window.open("https://youtube.com/@gaelsalgado-x1s?si=sgldt2ysGm5mfqrN","_blank");
+}
+
+let timeLeft = 120;
+let countdown;
+
+// Iniciar tarea 2
+function startTask(){
+    window.open("https://youtube.com/shorts/ZA_PFSqWKFE?si=iQEWfq704US2vPZT","_blank");
+    document.getElementById("success").innerText="";
+    timeLeft = 120;
+
+    countdown = setInterval(function(){
+        if(timeLeft <= 0){
+            clearInterval(countdown);
+            document.getElementById("timer").innerText="";
+            showFinalScreen();
+        } else {
+            document.getElementById("timer").innerText="⏳ Espera: " + timeLeft + " segundos";
+            timeLeft--;
+        }
+    },1000);
+}
+
+// Mostrar pantalla final
+function showFinalScreen(){
+    document.getElementById("taskScreen").classList.add("hidden");
+    const final = document.getElementById("finalScreen");
+    final.classList.remove("hidden");
+    final.classList.add("finalScreen");
+}
+
+// Reiniciar
+function restart(){
+    document.getElementById("finalScreen").classList.add("hidden");
+    document.getElementById("taskScreen").classList.remove("hidden");
+}
+
+// Simular descarga
+function download(){
+    alert("💾 Información descargada (simulado)");
+}
+</script>
+
+</body>
+</html>
