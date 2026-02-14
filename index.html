@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gael Premium Task System</title>
+<title>Gael Task System - Final Key</title>
 
 <style>
 body{
@@ -31,15 +31,6 @@ body{
 @keyframes glow{
     from{box-shadow:0 0 20px rgba(0,255,255,0.3);}
     to{box-shadow:0 0 60px rgba(0,255,255,0.8);}
-}
-
-input{
-    padding:10px;
-    border-radius:10px;
-    border:none;
-    width:80%;
-    margin-bottom:10px;
-    text-align:center;
 }
 
 button{
@@ -83,22 +74,21 @@ button:hover{
     from{opacity:0; transform:scale(0.9);}
     to{opacity:1; transform:scale(1);}
 }
+
+.keyBox{
+    margin-top:10px;
+    padding:10px;
+    background:rgba(0,255,255,0.2);
+    border-radius:10px;
+    user-select: all; /* para poder copiar */
+    cursor: pointer;
+}
 </style>
 </head>
 <body>
 
-<!-- KEY SYSTEM -->
-<div class="card" id="keyScreen">
-    <h2>🔐 PREMIUM ACCESS</h2>
-    <p>Introduce tu Key</p>
-    <input type="text" id="keyInput" placeholder="Enter Key">
-    <br>
-    <button onclick="checkKey()">Unlock</button>
-    <div class="error" id="errorMsg"></div>
-</div>
-
 <!-- TASK SYSTEM -->
-<div class="card hidden" id="taskScreen">
+<div class="card" id="taskScreen">
     <h2>GAEL TASK SYSTEM</h2>
 
     <p><b>Tarea 1:</b> Suscribirse al canal</p>
@@ -115,25 +105,12 @@ button:hover{
 <div class="card hidden" id="finalScreen">
     <h2>🎉 ¡Tareas Completadas!</h2>
     <p>Gracias por completar las tareas.</p>
+    <div class="keyBox" id="finalKey" onclick="copyKey()">🔑 Copia tu Key: gaeltr890</div>
+    <div class="success" id="copyMsg"></div>
     <button onclick="restart()">🔄 Hacer de nuevo</button>
-    <button onclick="download()">💾 Descargar información</button>
 </div>
 
 <script>
-const VALID_KEY = "gaeltr9";
-
-// Key system
-function checkKey(){
-    const input = document.getElementById("keyInput").value;
-    if(input === VALID_KEY){
-        document.getElementById("keyScreen").classList.add("hidden");
-        document.getElementById("taskScreen").classList.remove("hidden");
-    } else {
-        document.getElementById("errorMsg").innerText="❌ Key Incorrecta";
-    }
-}
-
-// Abrir canal
 function openChannel(){
     window.open("https://youtube.com/@gaelsalgado-x1s?si=sgldt2ysGm5mfqrN","_blank");
 }
@@ -141,10 +118,10 @@ function openChannel(){
 let timeLeft = 120;
 let countdown;
 
-// Iniciar tarea 2
 function startTask(){
     window.open("https://youtube.com/shorts/ZA_PFSqWKFE?si=iQEWfq704US2vPZT","_blank");
     document.getElementById("success").innerText="";
+    document.getElementById("copyMsg").innerText="";
     timeLeft = 120;
 
     countdown = setInterval(function(){
@@ -159,7 +136,7 @@ function startTask(){
     },1000);
 }
 
-// Mostrar pantalla final
+// Mostrar pantalla final con la key
 function showFinalScreen(){
     document.getElementById("taskScreen").classList.add("hidden");
     const final = document.getElementById("finalScreen");
@@ -167,15 +144,19 @@ function showFinalScreen(){
     final.classList.add("finalScreen");
 }
 
+// Copiar key al portapapeles
+function copyKey(){
+    navigator.clipboard.writeText("gaeltr890").then(()=>{
+        document.getElementById("copyMsg").innerText="✅ Key copiada al portapapeles!";
+    });
+}
+
 // Reiniciar
 function restart(){
     document.getElementById("finalScreen").classList.add("hidden");
+    document.getElementById("timer").innerText="";
     document.getElementById("taskScreen").classList.remove("hidden");
-}
-
-// Simular descarga
-function download(){
-    alert("💾 Información descargada (simulado)");
+    document.getElementById("copyMsg").innerText="";
 }
 </script>
 
